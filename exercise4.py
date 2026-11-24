@@ -1,7 +1,7 @@
 import os
 
 
-ADMIN_PASSWORD = "admin123"
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
 
 
 def check_admin(password):
@@ -11,6 +11,4 @@ def check_admin(password):
 
 def find_user(db, username):
     """The user's row, or None if the username does not exist"""
-    return db.execute(f"SELECT * FROM users WHERE username = '{username}'").fetchone()
-
-
+    return db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
